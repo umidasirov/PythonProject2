@@ -25,7 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     telRaqam = models.CharField(max_length=15)
     tugulganKuni = models.CharField(max_length=100)
     shaxar = models.CharField(max_length=200)
-    avatar = models.CharField(max_length=200)
+    avatar = models.URLField(max_length=200)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -37,3 +37,24 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.ism} {self.familia}"
 
+
+class Xulosa(models.Model):
+    ertak = models.ForeignKey('Ertak', on_delete=models.CASCADE, related_name='xulosalar')
+    xulosa = models.TextField()
+
+    def __str__(self):
+        return self.xulosa[:50] + '...'
+
+
+class Ertak(models.Model):
+    name = models.CharField(max_length=255)
+    is_favour = models.BooleanField(default=False)
+    img = models.URLField()
+    description = models.TextField()
+    stars = models.CharField(max_length=10)
+    main_text = models.TextField()
+    yosh = models.CharField(max_length=100, blank=True)  # yoki IntegerField, agar yosh raqam bo'lsa
+    tip = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

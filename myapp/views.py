@@ -1,9 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
+from .serializers import RegisterSerializer, LoginSerializer, UserSerializer, ErtakllarSerializer
 from rest_framework.permissions import IsAuthenticated
-from .models import User
+from .models import User,Ertak
 
 class RegisterView(APIView):
     def post(self, request):
@@ -34,4 +34,10 @@ class UsersListView(APIView):
     def get(self, request):
         users = User.objects.all()  # Barcha foydalanuvchilarni olish
         serializer = UserSerializer(users, many=True)  # Seriyalizatsiya qilish
+        return Response(serializer.data)
+class ErtakView(APIView):
+
+    def get(self, request):
+        ertaklar = Ertak.objects.all()
+        serializer = ErtakllarSerializer(ertaklar, many=True)
         return Response(serializer.data)

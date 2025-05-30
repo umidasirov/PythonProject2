@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User,Ertak
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -38,3 +38,7 @@ class LoginSerializer(serializers.Serializer):
             'access': str(refresh.access_token),
             'user': UserSerializer(user).data
         }
+class ErtakllarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ertak
+        fields = ('name','img','description','stars','main_text','yosh','tip')
