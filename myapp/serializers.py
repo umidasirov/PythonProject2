@@ -1,12 +1,16 @@
+from .models import File
 from rest_framework import serializers
-from .models import User,Ertak
+from .models import User, Ertak,File
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+import os
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'ism', 'familia', 'telRaqam', 'shaxar', 'tugulganKuni', 'avatar')
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -38,7 +42,34 @@ class LoginSerializer(serializers.Serializer):
             'access': str(refresh.access_token),
             'user': UserSerializer(user).data
         }
+
+
 class ErtakllarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ertak
-        fields = ('name','img','description','stars','main_text','yosh','tip')
+        fields = ('name', 'img', 'description', 'stars', 'main_text', 'yosh', 'tip')
+
+
+class FileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = File
+        fields = ['id', 'name', 'description', 'file']
+
+
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from django.http import FileResponse, Http404
+import os
+
+from .models import File
+from .serializers import FileSerializer
+
+
+class FileViewSet(viewsets.ModelViewSet):
+    queryset = File.objects.all()
+    serializer_class = FileSerializer
+
+class FileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = File
+        fields = ['id', 'name', 'description', 'file','img']

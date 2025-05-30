@@ -2,6 +2,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
 
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -55,6 +56,16 @@ class Ertak(models.Model):
     main_text = models.TextField()
     yosh = models.CharField(max_length=100, blank=True)  # yoki IntegerField, agar yosh raqam bo'lsa
     tip = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class File(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    file = models.FileField(upload_to='uploads/')  # файлы будут сохраняться в media/uploads/
+    img = models.URLField()
 
     def __str__(self):
         return self.name
