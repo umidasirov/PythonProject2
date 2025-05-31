@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterView, LoginView, ProfileView, UsersListView,ErtakView,FileViewSet
+from .views import RegisterView, LoginView, ProfileView, UsersListView,ErtakView,FileViewSet,ItemListView
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -14,6 +14,7 @@ urlpatterns = [
     path('users/', UsersListView.as_view(), name='users-list'),
     path('ertaklar/', ErtakView.as_view(), name='ertak'),
     path('api/', include(router.urls)),
+    path('videodarslar/',ItemListView.as_view(),name="videodars")
 ]
 # Загрузка файла (POST api/files/ с данными name, description, и полем file (multipart/form-data))
 #

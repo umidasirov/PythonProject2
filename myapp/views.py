@@ -1,9 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import RegisterSerializer, LoginSerializer, UserSerializer, ErtakllarSerializer
+
+from .serializers import RegisterSerializer, LoginSerializer, UserSerializer, ErtakllarSerializer,ItemSerializer
 from rest_framework.permissions import IsAuthenticated
-from .models import User, Ertak,File
+from .models import User, Ertak,File,Item
 
 
 class RegisterView(APIView):
@@ -76,3 +77,9 @@ class FileViewSet(viewsets.ModelViewSet):
             return response
         else:
             raise Http404("Файл не найден")
+
+class ItemListView(APIView):
+    def get(self, request):
+        items = Item.objects.all()
+        serializer = ItemSerializer(items, many=True)
+        return Response(serializer.data)

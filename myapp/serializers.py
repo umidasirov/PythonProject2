@@ -1,6 +1,6 @@
 from .models import File
 from rest_framework import serializers
-from .models import User, Ertak,File
+from .models import User, Ertak,File,Item,Course
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 import os
@@ -73,3 +73,15 @@ class FileSerializer(serializers.ModelSerializer):
     class Meta:
         model = File
         fields = ['id', 'name', 'description', 'file','img']
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['name', 'url']
+
+class ItemSerializer(serializers.ModelSerializer):
+    course = CourseSerializer(many=True)  # вложенный сериализатор
+
+    class Meta:
+        model = Item
+        fields = ['name', 'img', 'course']
