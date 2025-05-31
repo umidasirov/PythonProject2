@@ -69,3 +69,13 @@ class File(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField()
+
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+    img = models.URLField()
+    course = models.ManyToManyField(Course, related_name='items')
