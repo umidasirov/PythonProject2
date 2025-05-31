@@ -14,7 +14,8 @@ urlpatterns = [
     path('users/', UsersListView.as_view(), name='users-list'),
     path('ertaklar/', ErtakView.as_view(), name='ertak'),
     path('api/', include(router.urls)),
-    path('videodarslar/',ItemListView.as_view(),name="videodars")
+    path('items/', ItemListView.as_view(), name='item-list'),
+    #path('videodarslar/',ItemListView.as_view(),name="videodars")
 ]
 # Загрузка файла (POST api/files/ с данными name, description, и полем file (multipart/form-data))
 #

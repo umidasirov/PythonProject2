@@ -74,12 +74,14 @@ class File(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=100)
     url = models.URLField()
+
     def __str__(self):
         return self.name
 
 class Item(models.Model):
     name = models.CharField(max_length=100)
     img = models.URLField()
-    course = models.ManyToManyField(Course, related_name='items')
+    courses = models.ManyToManyField(Course, related_name='items')
+
     def __str__(self):
         return self.name
