@@ -16,7 +16,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'
-STATIC_DIR = [os.path.join('/staticfiles')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -24,7 +25,7 @@ STATIC_DIR = [os.path.join('/staticfiles')]
 SECRET_KEY = 'django-insecure-o3%_4hok4^y0by!g@g7zmv24b0x0td9wyh_8wlkb80!ih3dkj2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
