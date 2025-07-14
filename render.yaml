@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: pythonproject2
-    env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
-    startCommand: "gunicorn config.wsgi:application"
-    static:
-      - name: static
-        path: staticfiles
