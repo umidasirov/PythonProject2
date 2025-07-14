@@ -1,9 +1,6 @@
-static:
-  - name: HAPPYKIDS
-    path: staticfiles
 services:
   - type: web
-    name: yourprojectname
+    name: pythonproject2
     env: python
     buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
     startCommand: "gunicorn config.wsgi:application"
