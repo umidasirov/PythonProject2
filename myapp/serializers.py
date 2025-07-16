@@ -9,7 +9,7 @@ import os
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'ism', 'familia', 'telRaqam', 'shaxar', 'tugulganKuni', 'avatar')
+        fields = ('id', 'email', 'ism', 'familia', 'telRaqam', 'shaxar', 'tugulganKuni', 'avatar','courses')
 
 
 class RegisterSerializer(serializers.ModelSerializer):

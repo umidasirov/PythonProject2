@@ -18,18 +18,32 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
         return self.create_user(email, password, **extra_fields)
 
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField()
+
+    def __str__(self):
+        return self.name
+
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+    img = models.URLField()
+    courses = models.ManyToManyField(Course, related_name='items')
+
+    def __str__(self):
+        return self.name
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     familia = models.CharField(max_length=100)
     ism = models.CharField(max_length=100)
     telRaqam = models.CharField(max_length=15)
-    tugulganKuni = models.CharField(max_length=100)
+    tugulganKuni = models.DateField()
     shaxar = models.CharField(max_length=200)
-    avatar = models.URLField(max_length=200)
+    avatar = models.ImageField(upload_to='avatars/')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
+    courses = models.ManyToManyField(Item,related_name='item')
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -38,6 +52,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.ism} {self.familia}"
 
+    @property
+    def avatar_url(self):
+        if self.avatar:
+            return self.avatar.url
+        return ''
 
 class Xulosa(models.Model):
     ertak = models.ForeignKey('Ertak', on_delete=models.CASCADE, related_name='xulosalar')
@@ -70,18 +89,3 @@ class File(models.Model):
     def __str__(self):
         return self.name
 
-
-class Course(models.Model):
-    name = models.CharField(max_length=100)
-    url = models.URLField()
-
-    def __str__(self):
-        return self.name
-
-class Item(models.Model):
-    name = models.CharField(max_length=100)
-    img = models.URLField()
-    courses = models.ManyToManyField(Course, related_name='items')
-
-    def __str__(self):
-        return self.name
